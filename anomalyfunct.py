@@ -28,52 +28,52 @@ deviasi = df["OLD_VAL"].std()
 
 #Creating function to detect and replace outlier data
 def anomali(list_,std) :
-	jumlahdata = len(list_)
-	list_baru=[]
-	for y in xrange(0,jumlahdata):
-		anomali = True
-		if y == 0 :
-			#If first data on list
-			while anomali == True :
-				if (list_[y] < list_[y+1]-std) or (list_[y] > list_[y+1]+std) :
-					if (list_[y+1] < list_[y+2]) : #-----------------------Jika perbandingan data setelahnya cenderung naik
-						newdata = list_[y+1]-((list_[y+1]+list_[y+2])/2)
-						list_baru.append(newdata)
-					elif (list_[y+1] > list_[y+2]) : #---------------------Jika perbandingan data setelahnya cenderung turun
-						newdata = list_[y+1]+((list_[y+1]+list_[y+2])/2)
-						list_baru.append(newdata)
-					else : #-------------------------------------------------Jika perbandingan data setelahnya sama
-						newdata = list_[y+1]
-						list_baru.append(newdata)
-				else :
-					list_baru.append(list_[y])
-				anomali = False
-		elif y == (jumlahdata-1) :
-			#If last data on list
-			while anomali == True :
-				if (list_[y] < list_[y-1]-std) or (list_[y] > list_[y-1]+std) :
-					if (list_[y-2] < list_[y-1]) : #-----------------------Jika perbandingan data setelahnya cenderung naik
-						newdata = list_[y-1]+((list_[y-1]+list_[y-2])/2)
-						list_baru.append(newdata)
-					elif (list_[y-2] > list_[y-1]) : #---------------------Jika perbandingan data setelahnya cenderung turun
-						newdata = list_[y-1]-((list_[y-1]+list_[y-2])/2)
-						list_baru.append(newdata)
-					else : #-------------------------------------------------Jika perbandingan data setelahnya sama
-						newdata = list_[y+1]
-						list_baru.append(newdata)
-				else :
-					list_baru.append(list_[y])
-				anomali = False
-		else :
-			#If data is not first or last data
-			while anomali == True :
-				if ((list_[y] < list_[y-1]-std) and (list_[y] < list_[y+1]-std)) or ((list_[y] > list_[y-1]+std) and (list_[y] > list_[y+1]+std)) :
-					newdata = (list_[y-1]+list_[y+1])/2
-					list_baru.append(newdata)
-				else :
-					list_baru.append(list_[y])
-				anomali = False
-	return list_baru #----------Get list as return
+ jumlahdata = len(list_)
+ list_baru=[]
+ for y in xrange(0,jumlahdata):
+  anomali = True
+  if y == 0 :
+   #If first data on list
+   while anomali == True :
+    if (list_[y] < list_[y+1]-std) or (list_[y] > list_[y+1]+std) :
+     if (list_[y+1] < list_[y+2]) : #-----------------------Jika perbandingan data setelahnya cenderung naik
+      newdata = list_[y+1]-((list_[y+1]+list_[y+2])/2)
+      list_baru.append(newdata)
+     elif (list_[y+1] > list_[y+2]) : #---------------------Jika perbandingan data setelahnya cenderung turun
+      newdata = list_[y+1]+((list_[y+1]+list_[y+2])/2)
+      list_baru.append(newdata)
+     else : #-------------------------------------------------Jika perbandingan data setelahnya sama
+      newdata = list_[y+1]
+      list_baru.append(newdata)
+    else :
+     list_baru.append(list_[y])
+    anomali = False
+  elif y == (jumlahdata-1) :
+   #If last data on list
+   while anomali == True :
+    if (list_[y] < list_[y-1]-std) or (list_[y] > list_[y-1]+std) :
+     if (list_[y-2] < list_[y-1]) : #-----------------------Jika perbandingan data setelahnya cenderung naik
+      newdata = list_[y-1]+((list_[y-1]+list_[y-2])/2)
+      list_baru.append(newdata)
+     elif (list_[y-2] > list_[y-1]) : #---------------------Jika perbandingan data setelahnya cenderung turun
+      newdata = list_[y-1]-((list_[y-1]+list_[y-2])/2)
+      list_baru.append(newdata)
+     else : #-------------------------------------------------Jika perbandingan data setelahnya sama
+      newdata = list_[y+1]
+      list_baru.append(newdata)
+    else :
+     list_baru.append(list_[y])
+    anomali = False
+  else :
+   #If data is not first or last data
+   while anomali == True :
+    if ((list_[y] < list_[y-1]-std) and (list_[y] < list_[y+1]-std)) or ((list_[y] > list_[y-1]+std) and (list_[y] > list_[y+1]+std)) :
+     newdata = (list_[y-1]+list_[y+1])/2
+     list_baru.append(newdata)
+    else :
+     list_baru.append(list_[y])
+    anomali = False
+ return list_baru #----------Get list as return
 
 #Declare list from function
 list_br=anomali(dflist,deviasi)
